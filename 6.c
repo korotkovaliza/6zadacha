@@ -29,25 +29,25 @@ struct file_info
 {
 	char name[MAX_LENGTH_NAME + 1];
 	char address[MAX_LENGTH_ADDRESS + 1];
-	int mode;//модификация доступа, права
-	char type[MAX_LENGTH_NAME + 1];//для удобства, названия типа объекта
+	int mode;
+	char type[MAX_LENGTH_NAME + 1];
 	struct time last_change_time;
-	time_t last_change_time_in_sec;//время последнего изменения файла в секундах
+	time_t last_change_time_in_sec;
 };
 
-int search_file(char*, char*, int*, struct file_info*);//рекуррентный поиск файла
-int get_info(char*, struct stat*, struct file_info*);//в нее мы передаем структуру типа stat, представляет нужную информацию в структуре file_info
-int timecpy(struct time*, struct tm*);//представляет в том формате, в котором нужно
-int dircpy(char*, char*);//копирование директории
-int check_file(char*, char*, int);//проверка существования файла
-int cpyfile(char*, char*);//копирование файла
-int gzip_file(char*);//сжатие файла
+int search_file(char*, char*, int*, struct file_info*);
+int get_info(char*, struct stat*, struct file_info*);
+int timecpy(struct time*, struct tm*);
+int dircpy(char*, char*);
+int check_file(char*, char*, int);
+int cpyfile(char*, char*);
+int gzip_file(char*);
 void print_info(struct file_info*);
-void check_last_time();//проверяет время последнего запуска программы
-void remember_last_time();//запоминает время последнего запуска программы
+void check_last_time();
+void remember_last_time();
 int get_info_from_address(char*, struct file_info*);
 
-time_t last_time;//время последнего запуска программы в секундах
+time_t last_time;
 
 int main(int argc, char** argv)
 {
