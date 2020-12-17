@@ -29,32 +29,29 @@ struct file_info
 {
 	char name[MAX_LENGTH_NAME + 1];
 	char address[MAX_LENGTH_ADDRESS + 1];
-	int mode;
-	char type[MAX_LENGTH_NAME + 1];
+	int mode;//модификация доступа, права
+	char type[MAX_LENGTH_NAME + 1];//для удобства, названия типа объекта
 	struct time last_change_time;
-	time_t last_change_time_in_sec;
+	time_t last_change_time_in_sec;//время последнего изменения файла в секундах
 };
 
-int search_file(char*, char*, int*, struct file_info*);
-int get_info(char*, struct stat*, struct file_info*);
-int timecpy(struct time*, struct tm*);
-int dircpy(char*, char*);
-int check_file(char*, char*, int);
-int cpyfile(char*, char*);
-int gzip_file(char*);
+int search_file(char*, char*, int*, struct file_info*);//рекуррентный поиск файла
+int get_info(char*, struct stat*, struct file_info*);//в нее мы передаем структуру типа stat, представляет нужную информацию в структуре file_info
+int timecpy(struct time*, struct tm*);//представляет в том формате, в котором нужно
+int dircpy(char*, char*);//копирование директории
+int check_file(char*, char*, int);//проверка существования файла
+int cpyfile(char*, char*);//копирование файла
+int gzip_file(char*);//сжатие файла
 void print_info(struct file_info*);
-void check_last_time();
-void remember_last_time();
+void check_last_time();//проверяет время последнего запуска программы
+void remember_last_time();//запоминает время последнего запуска программы
 int get_info_from_address(char*, struct file_info*);
 
-time_t last_time;
+time_t last_time;//время последнего запуска программы в секундах
 
 int main(int argc, char** argv)
 {
 	check_last_time();
-	char address[MAX_LENGTH_ADDRESS + 1];
-	int deep1 = SEARCH_REC;
-	int deep2 = SEARCH_REC;
 	struct file_info dir_from;
 	struct file_info dir_to;
 	if (!get_info_from_address(argv[1], &dir_from))
@@ -172,12 +169,12 @@ int dircpy(char* address_to, char* address_from)
 		{
 			continue;
 		}
-		printf("Address from before (in dircpy): %s\n", address_from);
+		//printf("Address from before (in dircpy): %s\n", address_from);
 		strcat(address_from, "/");
 		strcat(address_to, "/");
 		strcat(address_from, main_info->d_name);
 		strcat(address_to, main_info->d_name);
-		printf("Address from after (in dircpy): %s\n", address_from);
+		//printf("Address from after (in dircpy): %s\n", address_from);
 		if(stat(address_from, &info))
 		{
 			printf("Error: can\'t make stat structure (for file in address: %s)\n", address_from);
